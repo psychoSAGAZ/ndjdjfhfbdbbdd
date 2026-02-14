@@ -2893,7 +2893,6 @@ function redzlib:ApplyTheme(themeName)
 
 	local gui = nil
 
-	-- Procurar a ScreenGui correta da Redz
 	for _, v in pairs(game.CoreGui:GetChildren()) do
 		if v:IsA("ScreenGui") and string.find(v.Name, "RedzHub_") then
 			gui = v
@@ -2903,29 +2902,28 @@ function redzlib:ApplyTheme(themeName)
 
 	if not gui then return end
 
-	-- Atualizar tudo dinamicamente
 	for _, v in pairs(gui:GetDescendants()) do
-		
-		-- Gradientes do Hub
-		if v:IsA("UIGradient") then
+
+		-- HUB GRADIENT (parte principal)
+		if v:IsA("UIGradient") and v.Parent:IsA("Frame") then
 			v.Color = Theme["Color Hub 1"]
 		end
-		
-		-- Todos Frames
-		if v:IsA("Frame") then
-			v.BackgroundColor3 = Theme["Color Hub 2"]
-		end
-		
-		-- Bordas
+
+		-- STROKES
 		if v:IsA("UIStroke") then
 			v.Color = Theme["Color Stroke"]
 		end
-		
-		-- Textos
+
+		-- TEXTOS
 		if v:IsA("TextLabel") or v:IsA("TextButton") then
 			v.TextColor3 = Theme["Color Text"]
 		end
-		
+
+		-- ELEMENTOS DE DESTAQUE (botões ativos)
+		if v:IsA("Frame") and v.Name == "Accent" then
+			v.BackgroundColor3 = Theme["Color Theme"]
+		end
+
 	end
 end
 
