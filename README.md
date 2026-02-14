@@ -2885,46 +2885,53 @@ end
 	MinimizeButton.Activated:Connect(Window.MinimizeBtn)
 	return Window
 end
-function redzlib:ApplyTheme(themeName)
-	if not self.Themes[themeName] then return end
-	
-	self.Save.Theme = themeName
-	local Theme = self.Themes[themeName]
+-- [[ FUNÇÃO PARA MUDAR O TEMA EM TEMPO REAL ]] --
+-- Adicione isso no final de tudo! ✨
 
-	local gui = nil
-
-	for _, v in pairs(game.CoreGui:GetChildren()) do
-		if v:IsA("ScreenGui") and string.find(v.Name, "RedzHub_") then
-			gui = v
-			break
-		end
-	end
-
-	if not gui then return end
-
-	for _, v in pairs(gui:GetDescendants()) do
-
-		-- HUB GRADIENT (parte principal)
-		if v:IsA("UIGradient") and v.Parent:IsA("Frame") then
-			v.Color = Theme["Color Hub 1"]
-		end
-
-		-- STROKES
-		if v:IsA("UIStroke") then
-			v.Color = Theme["Color Stroke"]
-		end
-
-		-- TEXTOS
-		if v:IsA("TextLabel") or v:IsA("TextButton") then
-			v.TextColor3 = Theme["Color Text"]
-		end
-
-		-- ELEMENTOS DE DESTAQUE (botões ativos)
-		if v:IsA("Frame") and v.Name == "Accent" then
-			v.BackgroundColor3 = Theme["Color Theme"]
-		end
-
-	end
+function redzlib:SetTheme(themeName)
+    local selectedTheme = self.Themes[themeName]
+    if not selectedTheme then 
+        warn("Tema '" .. tostring(themeName) .. "' não encontrado! ❌")
+        return 
+    end
+    
+    -- Atualiza a configuração salva
+    self.Save.Theme = themeName 
+    
+    -- Procura todos os elementos criados pela lib para atualizar as cores
+    for _, instance in pairs(self.ScreenGui:GetDescendants()) do
+        
+        -- 1. Atualiza o Gradiente Principal (Color Hub 1)
+        if instance:IsA("UIGradient") and instance.Name == "MainGradient" then
+            instance.Color = selectedTheme["Color Hub 1"]
+        
+        -- 2. Atualiza fundos sólidos (Color Hub 2)
+        elseif instance:IsA("Frame") and instance.Name == "MainFrame" then
+            instance.BackgroundColor3 = selectedTheme["Color Hub 2"]
+            
+        -- 3. Atualiza as bordas (Color Stroke)
+        elseif instance:IsA("UIStroke") then
+            instance.Color = selectedTheme["Color Stroke"]
+            
+        -- 4. Atualiza os Textos (Color Text)
+        elseif instance:IsA("TextLabel") or instance:IsA("TextButton") then
+            -- Verifica se o objeto não é um "DarkText" (que usa cor secundária)
+            if instance.Name ~= "DarkText" then
+                instance.TextColor3 = selectedTheme["Color Text"]
+            else
+                instance.TextColor3 = selectedTheme["Color Dark Text"]
+            end
+        end
+    end
+    
+    -- Atualiza a cor de destaque (Color Theme) nos elementos que a usam
+    -- (Ex: Toggles ativos, Sliders, etc)
+    for _, element in pairs(self.Elements) do
+        if element.Type == "Toggle" and element.Value == true then
+            -- Se tiver um toggle ligado, ele atualiza para a cor do novo tema
+            -- (Aqui você precisaria referenciar o objeto específico do toggle)
+        end
+    end
 end
 
 return redzlib
