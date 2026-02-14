@@ -2885,6 +2885,31 @@ end
 	MinimizeButton.Activated:Connect(Window.MinimizeBtn)
 	return Window
 end
+function redzlib:ApplyTheme(themeName)
+	if not self.Themes[themeName] then return end
+	
+	self.Save.Theme = themeName
+	local Theme = self.Themes[themeName]
+
+	local gui = game.CoreGui:FindFirstChild("RedzHub")
+	if not gui then return end
+
+	for _, v in pairs(gui:GetDescendants()) do
+		
+		if v:IsA("UIGradient") then
+			v.Color = Theme["Color Hub 1"]
+		end
+		
+		if v:IsA("UIStroke") then
+			v.Color = Theme["Color Stroke"]
+		end
+		
+		if v:IsA("TextLabel") or v:IsA("TextButton") then
+			v.TextColor3 = Theme["Color Text"]
+		end
+		
+	end
+end
 
 return redzlib
 
