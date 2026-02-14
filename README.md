@@ -12,9 +12,9 @@ local redzlib = {
 	Themes = {
 		Darker = {
 			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(80, 10, 10)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(80, 20, 10)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(80, 15, 10))
+				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(20, 20, 20)),
+				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(30, 30, 30)),
+				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(20, 20, 20))
 			}),
 			["Color Hub 2"] = Color3.fromRGB(18, 18, 18),
 			["Color Stroke"] = Color3.fromRGB(35, 35, 35),
