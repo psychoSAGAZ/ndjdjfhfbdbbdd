@@ -2848,7 +2848,7 @@ end
 				Size = UDim2.new(1, -14, 0, 16),
 				AnchorPoint = Vector2.new(0.5, 1),
 				Position = UDim2.new(0.5, 0, 1, -7),
-				Text = "Join",
+				Text = "Copia Nick",
 				Font = Enum.Font.GothamBold,
 				TextSize = 12,
 				TextColor3 = Color3.fromRGB(220, 220, 220),
@@ -2862,12 +2862,12 @@ end
 				
 				ClickDelay = true
 				SetProps(JoinButton, {
-					Text = "servidor Copiado",
+					Text = "Nick Copiado",
 					BackgroundColor3 = Color3.fromRGB(100, 100, 100),
 					TextColor3 = Color3.fromRGB(150, 150, 150)
 				})task.wait(5)
 				SetProps(JoinButton, {
-					Text = "Entrar",
+					Text = "Copia Nick",
 					BackgroundColor3 = Color3.fromRGB(50, 150, 50),
 					TextColor3 = Color3.fromRGB(220, 220, 220)
 				})ClickDelay = false
@@ -2887,4 +2887,3 @@ end
 end
 
 return redzlib
-
