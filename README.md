@@ -2886,8 +2886,6 @@ end
 	return Window
 end
 
-return redzlib
-
 --// SOUND SYSTEM AUTO (FINAL DA LIB)
 
 task.spawn(function()
@@ -2942,3 +2940,6 @@ task.spawn(function()
     end)
 
 end)
+
+return redzlib
+
