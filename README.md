@@ -2887,3 +2887,58 @@ end
 end
 
 return redzlib
+
+--// SOUND SYSTEM AUTO (FINAL DA LIB)
+
+task.spawn(function()
+
+    local ClickSoundSettings = {
+        Enabled = true,
+        SoundId = "rbxassetid://18998603679",
+        Volume = 0.1
+    }
+
+    local SoundService = game:GetService("SoundService")
+
+    local function PlayClickSound()
+        if not ClickSoundSettings.Enabled then return end
+
+        local sound = Instance.new("Sound")
+        sound.SoundId = ClickSoundSettings.SoundId
+        sound.Volume = ClickSoundSettings.Volume
+        sound.Parent = SoundService
+        sound:Play()
+
+        sound.Ended:Connect(function()
+            sound:Destroy()
+        end)
+    end
+
+    local Connected = setmetatable({}, {__mode = "k"}) -- evita memory leak
+
+    local function Hook(obj)
+        if Connected[obj] then return end
+        Connected[obj] = true
+
+        obj.Activated:Connect(PlayClickSound)
+    end
+
+    -- espera UI da lib existir
+    task.wait(1)
+
+    -- só pega UI (melhor que game inteiro)
+    local CoreGui = game:GetService("CoreGui")
+
+    for _, v in ipairs(CoreGui:GetDescendants()) do
+        if v:IsA("TextButton") or v:IsA("ImageButton") then
+            Hook(v)
+        end
+    end
+
+    CoreGui.DescendantAdded:Connect(function(obj)
+        if obj:IsA("TextButton") or obj:IsA("ImageButton") then
+            Hook(obj)
+        end
+    end)
+
+end)
